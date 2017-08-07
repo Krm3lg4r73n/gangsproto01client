@@ -13,8 +13,15 @@ import {
   ActivityIndicator,
 } from 'react-native';
 import Login from '../../lib/Login';
+import { NavigationActions } from 'react-navigation'
 
 class LoginScreen extends Component {
+  static navigationOptions() {
+    return {
+    title: 'Login',
+    header: null,
+  }};
+
   constructor(props) {
     super(props);
     this.state = {
@@ -39,6 +46,7 @@ class LoginScreen extends Component {
   };
 
   connectPress = () => {
+    this.props.dispatch(NavigationActions.navigate({routeName: 'some', params: {name: this.state.username}}));
     Login.login(this.state);
     Keyboard.dismiss();
     this.setState({
@@ -119,9 +127,8 @@ const styles = StyleSheet.create({
   }
 });
 
-function mapStateToProps(state) {
-  console.log(state.network);
-  return { socket: state.socket, socketConnected: state.socketConnected };
+function mapStateToProps({ test }) {
+  return { socket: test.socket, socketConnected: test.socketConnected };
 }
 
 export default connect(mapStateToProps)(LoginScreen)

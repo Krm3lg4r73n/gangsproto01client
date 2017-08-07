@@ -1,13 +1,11 @@
-// @flow
-"use strict";
-
 import React from 'react';
-import { View } from 'react-native';
-import LoginScreen from './LoginScreen';
+import { connect } from 'react-redux';
+import { addNavigationHelpers } from 'react-navigation';
+import RootNavigator from '../navigators/RootNavigator';
 
-const App = () =>
-  <View style={{flex: 1}}>
-    <LoginScreen />
-  </View>;
+const App = ({ dispatch, navigation: state }) => (
+  <RootNavigator navigation={addNavigationHelpers({ dispatch, state })}/>
+);
 
-export default App;
+const mapStateToProps = ({ navigation }) => ({ navigation });
+export default connect(mapStateToProps)(App);
