@@ -12,8 +12,7 @@ import {
   View,
   ActivityIndicator,
 } from 'react-native';
-import Login from '../../lib/Login';
-import { NavigationActions } from 'react-navigation'
+import { login } from '../actions/login';
 
 class LoginScreen extends Component {
   static navigationOptions() {
@@ -24,11 +23,11 @@ class LoginScreen extends Component {
 
   constructor(props) {
     super(props);
-    this.state = {
+    this.initialState = {
       host: '192.168.100.1:8080',
       username: 'David',
-      connecting: false,
     };
+    this.state = this.initialState;
   }
 
   hostChange = (value) => {
@@ -46,30 +45,32 @@ class LoginScreen extends Component {
   };
 
   connectPress = () => {
-    this.props.dispatch(NavigationActions.navigate({routeName: 'some', params: {name: this.state.username}}));
-    Login.login(this.state);
+    const { host, username } = this.state;
+    this.props.dispatch(login(host, username));
     Keyboard.dismiss();
-    this.setState({
-      ...this.state,
-      connecting: true,
-    });
   };
 
-  renderSubmitButton = () =>
-    <View style={styles.buttonWrapper}>
-      <Button title="Connect" onPress={this.connectPress} />
-    </View>;
-
   renderSubmit = () => {
-    if(this.state.connecting) {
+    if(this.props.connecting) {
       return <ActivityIndicator style={styles.spinner} size="large" />;
     } else {
-      return this.renderSubmitButton();
+      return (
+        <View style={styles.buttonWrapper}>
+          <Button title="Connect" onPress={this.connectPress} />
+        </View>
+      );
     }
   };
 
+  renderError = () => {
+    const { errorMessage } = this.props;
+    if (!errorMessage) return null;
+    return <Text style={styles.error}>{`Error: ${errorMessage}`}</Text>;
+  };
+
   render() {
-    const { host, username, connecting } = this.state;
+    const { host, username } = this.state;
+    const { connecting } = this.props;
 
     return (
       <View style={styles.screen}>
@@ -77,6 +78,7 @@ class LoginScreen extends Component {
           <Text style={styles.title}>
             GangsClient v0.1
           </Text>
+          {this.renderError()}
         </View>
         <View style={styles.bottom}>
           <TextInput
@@ -110,6 +112,12 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     fontSize: 20,
   },
+  error: {
+    textAlign: 'center',
+    color: 'darkred',
+    marginTop: 50,
+    fontSize: 10,
+  },
   top: {
     flex: 1,
     justifyContent: 'center',
@@ -127,8 +135,8 @@ const styles = StyleSheet.create({
   }
 });
 
-function mapStateToProps({ test }) {
-  return { socket: test.socket, socketConnected: test.socketConnected };
+function mapStateToProps({ login }) {
+  return login;
 }
 
 export default connect(mapStateToProps)(LoginScreen)
