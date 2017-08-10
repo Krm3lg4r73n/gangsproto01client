@@ -16,11 +16,11 @@ function loginError(errorMessage) {
 }
 
 export function login(host, username) {
-  return dispatch => {
+  return (dispatch) => {
     dispatch(loginStarted());
-    Login.login({host, username})
-    .then(() => dispatch(navigate('some', {name: username})))
-    .then(() => setTimeout(() => dispatch(loginSuccess()), 500))
-    .catch((error) => dispatch(loginError(error)));
+    Login.login({ host, username })
+      .then(() => dispatch(navigate('some', { name: username })))
+      .then(() => setTimeout(() => dispatch(loginSuccess()), 500))
+      .catch(error => dispatch(loginError(error)));
   };
-};
+}

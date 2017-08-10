@@ -1,18 +1,10 @@
 // @flow
-"use strict";
+'use strict';
 
-import React, { Component } from 'react';
+import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import {
-  StyleSheet,
-  Text,
-  View,
-} from 'react-native';
-import {
-  Message,
-  send,
-  registerListener,
-} from '../services/messaging';
+import { StyleSheet, Text, View } from 'react-native';
+import { Message, send, registerListener } from '../services/messaging';
 import Game from '../../lib/Game';
 
 class MyComponent extends Component {
@@ -31,22 +23,22 @@ class MyComponent extends Component {
     this.log('Ok');
 
     const msg = Message.WorldCreate.create({
-      key: "NEUE_WELT",
+      key: 'NEUE_WELT',
     });
 
-    if(this.props.socketConnected) {
+    if (this.props.socketConnected) {
       send(this.props.socket, msg);
     }
   };
 
-  msgError = (error) => {
+  msgError = error => {
     this.log(`Error: ${error.type}`);
   };
-  msgPerson = (person) => {
-    console.log("Person: " + person.name);
+  msgPerson = person => {
+    console.log('Person: ' + person.name);
   };
 
-  log = (text) => {
+  log = text => {
     console.log(text);
     this.setState({
       ...this.state,
@@ -91,4 +83,4 @@ function mapStateToProps(state) {
   return { socket: state.socket, socketConnected: state.socketConnected };
 }
 
-export default connect(mapStateToProps)(MyComponent)
+export default connect(mapStateToProps)(MyComponent);

@@ -1,7 +1,7 @@
 // @flow
-"use strict";
+'use strict';
 
-import React, { Component } from 'react';
+import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import {
   StyleSheet,
@@ -17,9 +17,10 @@ import { login } from '../actions/login';
 class LoginScreen extends Component {
   static navigationOptions() {
     return {
-    title: 'Login',
-    header: null,
-  }};
+      title: 'Login',
+      header: null,
+    };
+  }
 
   constructor(props) {
     super(props);
@@ -30,14 +31,14 @@ class LoginScreen extends Component {
     this.state = this.initialState;
   }
 
-  hostChange = (value) => {
+  hostChange = value => {
     this.setState({
       ...this.state,
       host: value,
     });
   };
 
-  usernameChange = (value) => {
+  usernameChange = value => {
     this.setState({
       ...this.state,
       username: value,
@@ -51,7 +52,7 @@ class LoginScreen extends Component {
   };
 
   renderSubmit = () => {
-    if(this.props.connecting) {
+    if (this.props.connecting) {
       return <ActivityIndicator style={styles.spinner} size="large" />;
     } else {
       return (
@@ -75,9 +76,7 @@ class LoginScreen extends Component {
     return (
       <View style={styles.screen}>
         <View style={styles.top}>
-          <Text style={styles.title}>
-            GangsClient v0.1
-          </Text>
+          <Text style={styles.title}>GangsClient v0.1</Text>
           {this.renderError()}
         </View>
         <View style={styles.bottom}>
@@ -132,11 +131,11 @@ const styles = StyleSheet.create({
   },
   buttonWrapper: {
     marginTop: 20,
-  }
+  },
 });
 
 function mapStateToProps({ login }) {
   return login;
 }
 
-export default connect(mapStateToProps)(LoginScreen)
+export default connect(mapStateToProps)(LoginScreen);
