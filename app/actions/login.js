@@ -1,4 +1,4 @@
-import Login from '../../lib/Login';
+import User from '../../lib/User';
 import { navigate } from './navigation';
 
 export const LOGIN_STARTED = 'LOGIN_STARTED';
@@ -18,7 +18,7 @@ function loginError(errorMessage) {
 export function login(host, username) {
   return (dispatch) => {
     dispatch(loginStarted());
-    Login.login({ host, username })
+    User.login({ host, username })
       .then(() => dispatch(navigate('some', { name: username })))
       .then(() => setTimeout(() => dispatch(loginSuccess()), 500))
       .catch(error => dispatch(loginError(error)));
