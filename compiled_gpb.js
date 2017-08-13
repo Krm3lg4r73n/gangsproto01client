@@ -574,247 +574,6 @@ export const msg = $root.msg = (() => {
         return WorldJoin;
     })();
 
-    msg.Bootstrap = (function() {
-
-        /**
-         * Properties of a Bootstrap.
-         * @memberof msg
-         * @interface IBootstrap
-         * @property {Array.<string>} [users] Bootstrap users
-         * @property {Array.<string>} [worlds] Bootstrap worlds
-         */
-
-        /**
-         * Constructs a new Bootstrap.
-         * @memberof msg
-         * @classdesc Represents a Bootstrap.
-         * @constructor
-         * @param {msg.IBootstrap=} [properties] Properties to set
-         */
-        function Bootstrap(properties) {
-            this.users = [];
-            this.worlds = [];
-            if (properties)
-                for (let keys = Object.keys(properties), i = 0; i < keys.length; ++i)
-                    if (properties[keys[i]] != null)
-                        this[keys[i]] = properties[keys[i]];
-        }
-
-        /**
-         * Bootstrap users.
-         * @member {Array.<string>}users
-         * @memberof msg.Bootstrap
-         * @instance
-         */
-        Bootstrap.prototype.users = $util.emptyArray;
-
-        /**
-         * Bootstrap worlds.
-         * @member {Array.<string>}worlds
-         * @memberof msg.Bootstrap
-         * @instance
-         */
-        Bootstrap.prototype.worlds = $util.emptyArray;
-
-        /**
-         * Creates a new Bootstrap instance using the specified properties.
-         * @function create
-         * @memberof msg.Bootstrap
-         * @static
-         * @param {msg.IBootstrap=} [properties] Properties to set
-         * @returns {msg.Bootstrap} Bootstrap instance
-         */
-        Bootstrap.create = function create(properties) {
-            return new Bootstrap(properties);
-        };
-
-        /**
-         * Encodes the specified Bootstrap message. Does not implicitly {@link msg.Bootstrap.verify|verify} messages.
-         * @function encode
-         * @memberof msg.Bootstrap
-         * @static
-         * @param {msg.IBootstrap} message Bootstrap message or plain object to encode
-         * @param {$protobuf.Writer} [writer] Writer to encode to
-         * @returns {$protobuf.Writer} Writer
-         */
-        Bootstrap.encode = function encode(message, writer) {
-            if (!writer)
-                writer = $Writer.create();
-            if (message.users != null && message.users.length)
-                for (let i = 0; i < message.users.length; ++i)
-                    writer.uint32(/* id 1, wireType 2 =*/10).string(message.users[i]);
-            if (message.worlds != null && message.worlds.length)
-                for (let i = 0; i < message.worlds.length; ++i)
-                    writer.uint32(/* id 2, wireType 2 =*/18).string(message.worlds[i]);
-            return writer;
-        };
-
-        /**
-         * Encodes the specified Bootstrap message, length delimited. Does not implicitly {@link msg.Bootstrap.verify|verify} messages.
-         * @function encodeDelimited
-         * @memberof msg.Bootstrap
-         * @static
-         * @param {msg.IBootstrap} message Bootstrap message or plain object to encode
-         * @param {$protobuf.Writer} [writer] Writer to encode to
-         * @returns {$protobuf.Writer} Writer
-         */
-        Bootstrap.encodeDelimited = function encodeDelimited(message, writer) {
-            return this.encode(message, writer).ldelim();
-        };
-
-        /**
-         * Decodes a Bootstrap message from the specified reader or buffer.
-         * @function decode
-         * @memberof msg.Bootstrap
-         * @static
-         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
-         * @param {number} [length] Message length if known beforehand
-         * @returns {msg.Bootstrap} Bootstrap
-         * @throws {Error} If the payload is not a reader or valid buffer
-         * @throws {$protobuf.util.ProtocolError} If required fields are missing
-         */
-        Bootstrap.decode = function decode(reader, length) {
-            if (!(reader instanceof $Reader))
-                reader = $Reader.create(reader);
-            let end = length === undefined ? reader.len : reader.pos + length, message = new $root.msg.Bootstrap();
-            while (reader.pos < end) {
-                let tag = reader.uint32();
-                switch (tag >>> 3) {
-                case 1:
-                    if (!(message.users && message.users.length))
-                        message.users = [];
-                    message.users.push(reader.string());
-                    break;
-                case 2:
-                    if (!(message.worlds && message.worlds.length))
-                        message.worlds = [];
-                    message.worlds.push(reader.string());
-                    break;
-                default:
-                    reader.skipType(tag & 7);
-                    break;
-                }
-            }
-            return message;
-        };
-
-        /**
-         * Decodes a Bootstrap message from the specified reader or buffer, length delimited.
-         * @function decodeDelimited
-         * @memberof msg.Bootstrap
-         * @static
-         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
-         * @returns {msg.Bootstrap} Bootstrap
-         * @throws {Error} If the payload is not a reader or valid buffer
-         * @throws {$protobuf.util.ProtocolError} If required fields are missing
-         */
-        Bootstrap.decodeDelimited = function decodeDelimited(reader) {
-            if (!(reader instanceof $Reader))
-                reader = new $Reader(reader);
-            return this.decode(reader, reader.uint32());
-        };
-
-        /**
-         * Verifies a Bootstrap message.
-         * @function verify
-         * @memberof msg.Bootstrap
-         * @static
-         * @param {Object.<string,*>} message Plain object to verify
-         * @returns {string|null} `null` if valid, otherwise the reason why it is not
-         */
-        Bootstrap.verify = function verify(message) {
-            if (typeof message !== "object" || message === null)
-                return "object expected";
-            if (message.users != null && message.hasOwnProperty("users")) {
-                if (!Array.isArray(message.users))
-                    return "users: array expected";
-                for (let i = 0; i < message.users.length; ++i)
-                    if (!$util.isString(message.users[i]))
-                        return "users: string[] expected";
-            }
-            if (message.worlds != null && message.hasOwnProperty("worlds")) {
-                if (!Array.isArray(message.worlds))
-                    return "worlds: array expected";
-                for (let i = 0; i < message.worlds.length; ++i)
-                    if (!$util.isString(message.worlds[i]))
-                        return "worlds: string[] expected";
-            }
-            return null;
-        };
-
-        /**
-         * Creates a Bootstrap message from a plain object. Also converts values to their respective internal types.
-         * @function fromObject
-         * @memberof msg.Bootstrap
-         * @static
-         * @param {Object.<string,*>} object Plain object
-         * @returns {msg.Bootstrap} Bootstrap
-         */
-        Bootstrap.fromObject = function fromObject(object) {
-            if (object instanceof $root.msg.Bootstrap)
-                return object;
-            let message = new $root.msg.Bootstrap();
-            if (object.users) {
-                if (!Array.isArray(object.users))
-                    throw TypeError(".msg.Bootstrap.users: array expected");
-                message.users = [];
-                for (let i = 0; i < object.users.length; ++i)
-                    message.users[i] = String(object.users[i]);
-            }
-            if (object.worlds) {
-                if (!Array.isArray(object.worlds))
-                    throw TypeError(".msg.Bootstrap.worlds: array expected");
-                message.worlds = [];
-                for (let i = 0; i < object.worlds.length; ++i)
-                    message.worlds[i] = String(object.worlds[i]);
-            }
-            return message;
-        };
-
-        /**
-         * Creates a plain object from a Bootstrap message. Also converts values to other types if specified.
-         * @function toObject
-         * @memberof msg.Bootstrap
-         * @static
-         * @param {msg.Bootstrap} message Bootstrap
-         * @param {$protobuf.IConversionOptions} [options] Conversion options
-         * @returns {Object.<string,*>} Plain object
-         */
-        Bootstrap.toObject = function toObject(message, options) {
-            if (!options)
-                options = {};
-            let object = {};
-            if (options.arrays || options.defaults) {
-                object.users = [];
-                object.worlds = [];
-            }
-            if (message.users && message.users.length) {
-                object.users = [];
-                for (let j = 0; j < message.users.length; ++j)
-                    object.users[j] = message.users[j];
-            }
-            if (message.worlds && message.worlds.length) {
-                object.worlds = [];
-                for (let j = 0; j < message.worlds.length; ++j)
-                    object.worlds[j] = message.worlds[j];
-            }
-            return object;
-        };
-
-        /**
-         * Converts this Bootstrap to JSON.
-         * @function toJSON
-         * @memberof msg.Bootstrap
-         * @instance
-         * @returns {Object.<string,*>} JSON object
-         */
-        Bootstrap.prototype.toJSON = function toJSON() {
-            return this.constructor.toObject(this, $protobuf.util.toJSONOptions);
-        };
-
-        return Bootstrap;
-    })();
-
     msg.Error = (function() {
 
         /**
@@ -1181,6 +940,192 @@ export const msg = $root.msg = (() => {
         };
 
         return Ok;
+    })();
+
+    msg.WorldJoined = (function() {
+
+        /**
+         * Properties of a WorldJoined.
+         * @memberof msg
+         * @interface IWorldJoined
+         * @property {number} [worldId] WorldJoined worldId
+         */
+
+        /**
+         * Constructs a new WorldJoined.
+         * @memberof msg
+         * @classdesc Represents a WorldJoined.
+         * @constructor
+         * @param {msg.IWorldJoined=} [properties] Properties to set
+         */
+        function WorldJoined(properties) {
+            if (properties)
+                for (let keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                    if (properties[keys[i]] != null)
+                        this[keys[i]] = properties[keys[i]];
+        }
+
+        /**
+         * WorldJoined worldId.
+         * @member {number}worldId
+         * @memberof msg.WorldJoined
+         * @instance
+         */
+        WorldJoined.prototype.worldId = 0;
+
+        /**
+         * Creates a new WorldJoined instance using the specified properties.
+         * @function create
+         * @memberof msg.WorldJoined
+         * @static
+         * @param {msg.IWorldJoined=} [properties] Properties to set
+         * @returns {msg.WorldJoined} WorldJoined instance
+         */
+        WorldJoined.create = function create(properties) {
+            return new WorldJoined(properties);
+        };
+
+        /**
+         * Encodes the specified WorldJoined message. Does not implicitly {@link msg.WorldJoined.verify|verify} messages.
+         * @function encode
+         * @memberof msg.WorldJoined
+         * @static
+         * @param {msg.IWorldJoined} message WorldJoined message or plain object to encode
+         * @param {$protobuf.Writer} [writer] Writer to encode to
+         * @returns {$protobuf.Writer} Writer
+         */
+        WorldJoined.encode = function encode(message, writer) {
+            if (!writer)
+                writer = $Writer.create();
+            if (message.worldId != null && message.hasOwnProperty("worldId"))
+                writer.uint32(/* id 1, wireType 0 =*/8).int32(message.worldId);
+            return writer;
+        };
+
+        /**
+         * Encodes the specified WorldJoined message, length delimited. Does not implicitly {@link msg.WorldJoined.verify|verify} messages.
+         * @function encodeDelimited
+         * @memberof msg.WorldJoined
+         * @static
+         * @param {msg.IWorldJoined} message WorldJoined message or plain object to encode
+         * @param {$protobuf.Writer} [writer] Writer to encode to
+         * @returns {$protobuf.Writer} Writer
+         */
+        WorldJoined.encodeDelimited = function encodeDelimited(message, writer) {
+            return this.encode(message, writer).ldelim();
+        };
+
+        /**
+         * Decodes a WorldJoined message from the specified reader or buffer.
+         * @function decode
+         * @memberof msg.WorldJoined
+         * @static
+         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+         * @param {number} [length] Message length if known beforehand
+         * @returns {msg.WorldJoined} WorldJoined
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        WorldJoined.decode = function decode(reader, length) {
+            if (!(reader instanceof $Reader))
+                reader = $Reader.create(reader);
+            let end = length === undefined ? reader.len : reader.pos + length, message = new $root.msg.WorldJoined();
+            while (reader.pos < end) {
+                let tag = reader.uint32();
+                switch (tag >>> 3) {
+                case 1:
+                    message.worldId = reader.int32();
+                    break;
+                default:
+                    reader.skipType(tag & 7);
+                    break;
+                }
+            }
+            return message;
+        };
+
+        /**
+         * Decodes a WorldJoined message from the specified reader or buffer, length delimited.
+         * @function decodeDelimited
+         * @memberof msg.WorldJoined
+         * @static
+         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+         * @returns {msg.WorldJoined} WorldJoined
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        WorldJoined.decodeDelimited = function decodeDelimited(reader) {
+            if (!(reader instanceof $Reader))
+                reader = new $Reader(reader);
+            return this.decode(reader, reader.uint32());
+        };
+
+        /**
+         * Verifies a WorldJoined message.
+         * @function verify
+         * @memberof msg.WorldJoined
+         * @static
+         * @param {Object.<string,*>} message Plain object to verify
+         * @returns {string|null} `null` if valid, otherwise the reason why it is not
+         */
+        WorldJoined.verify = function verify(message) {
+            if (typeof message !== "object" || message === null)
+                return "object expected";
+            if (message.worldId != null && message.hasOwnProperty("worldId"))
+                if (!$util.isInteger(message.worldId))
+                    return "worldId: integer expected";
+            return null;
+        };
+
+        /**
+         * Creates a WorldJoined message from a plain object. Also converts values to their respective internal types.
+         * @function fromObject
+         * @memberof msg.WorldJoined
+         * @static
+         * @param {Object.<string,*>} object Plain object
+         * @returns {msg.WorldJoined} WorldJoined
+         */
+        WorldJoined.fromObject = function fromObject(object) {
+            if (object instanceof $root.msg.WorldJoined)
+                return object;
+            let message = new $root.msg.WorldJoined();
+            if (object.worldId != null)
+                message.worldId = object.worldId | 0;
+            return message;
+        };
+
+        /**
+         * Creates a plain object from a WorldJoined message. Also converts values to other types if specified.
+         * @function toObject
+         * @memberof msg.WorldJoined
+         * @static
+         * @param {msg.WorldJoined} message WorldJoined
+         * @param {$protobuf.IConversionOptions} [options] Conversion options
+         * @returns {Object.<string,*>} Plain object
+         */
+        WorldJoined.toObject = function toObject(message, options) {
+            if (!options)
+                options = {};
+            let object = {};
+            if (options.defaults)
+                object.worldId = 0;
+            if (message.worldId != null && message.hasOwnProperty("worldId"))
+                object.worldId = message.worldId;
+            return object;
+        };
+
+        /**
+         * Converts this WorldJoined to JSON.
+         * @function toJSON
+         * @memberof msg.WorldJoined
+         * @instance
+         * @returns {Object.<string,*>} JSON object
+         */
+        WorldJoined.prototype.toJSON = function toJSON() {
+            return this.constructor.toObject(this, $protobuf.util.toJSONOptions);
+        };
+
+        return WorldJoined;
     })();
 
     msg.Person = (function() {

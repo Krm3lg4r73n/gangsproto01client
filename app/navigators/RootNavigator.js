@@ -1,10 +1,12 @@
 import { StackNavigator } from 'react-navigation';
 import LoginScreen from '../components/LoginScreen';
-import SomeScreen from '../components/SomeScreen';
+import WorldScreen from '../components/WorldScreen';
+import DebugScreen from '../components/DebugScreen';
 
 const RootNavigator = StackNavigator({
   login: { screen: LoginScreen },
-  some: { screen: SomeScreen, path: 'some/:name' },
+  world: { screen: WorldScreen },
+  debug: { screen: DebugScreen, path: 'debug/:name' },
 });
 
 export default RootNavigator;

@@ -19,7 +19,7 @@ export function login(host, username) {
   return (dispatch) => {
     dispatch(loginStarted());
     User.login({ host, username })
-      .then(() => dispatch(navigate('some', { name: username })))
+      .then(() => dispatch(navigate('world')))
       .then(() => setTimeout(() => dispatch(loginSuccess()), 500))
       .catch(error => dispatch(loginError(error)));
   };

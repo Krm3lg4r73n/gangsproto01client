@@ -1,14 +1,14 @@
 import React, { Component } from 'react';
 import { Text } from 'react-native';
 
-class SomeScreen extends Component {
+class DebugScreen extends Component {
   render() {
     return (
       <Text>
-        {String(this.props.navigation.state.params.name)}
+        {String(this.props.navigation.state.params.text)}
       </Text>
     );
   }
 }
 
-export default SomeScreen;
+export default DebugScreen;
