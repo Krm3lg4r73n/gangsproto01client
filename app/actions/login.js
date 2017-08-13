@@ -1,3 +1,4 @@
+import Network from '../../lib/Network';
 import User from '../../lib/User';
 import { navigate } from './navigation';
 
@@ -11,8 +12,8 @@ function loginStarted() {
 function loginSuccess() {
   return { type: LOGIN_SUCCESS };
 }
-function loginError(errorMessage) {
-  return { type: LOGIN_ERROR, errorMessage };
+function loginError({ type: errorType, description }) {
+  return { type: LOGIN_ERROR, errorMessage: errorType };
 }
 
 export function login(host, username) {
@@ -23,4 +24,8 @@ export function login(host, username) {
       .then(() => setTimeout(() => dispatch(loginSuccess()), 500))
       .catch(error => dispatch(loginError(error)));
   };
+}
+
+export function logout() {
+  return dispatch => Network.disconnect();
 }

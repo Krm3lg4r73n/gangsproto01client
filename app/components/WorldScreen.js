@@ -13,6 +13,7 @@ import {
   ActivityIndicator,
 } from 'react-native';
 import { joinWorld, createWorld } from '../actions/world';
+import { logout } from '../actions/login';
 
 class WorldScreen extends Component {
   static navigationOptions() {

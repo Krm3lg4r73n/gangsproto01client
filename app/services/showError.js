@@ -1,5 +1,5 @@
 import { Alert } from 'react-native';
 
-export default function showError(message) {
-  Alert.alert('Error', message);
+export default function showError({ type, description }) {
+  Alert.alert(`Error: ${type}`, description);
 }

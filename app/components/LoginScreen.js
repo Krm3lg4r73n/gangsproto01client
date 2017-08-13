@@ -12,7 +12,7 @@ import {
   View,
   ActivityIndicator,
 } from 'react-native';
-import { login } from '../actions/login';
+import { login, logout } from '../actions/login';
 
 class LoginScreen extends Component {
   static navigationOptions() {
@@ -29,6 +29,10 @@ class LoginScreen extends Component {
       username: 'David',
     };
     this.state = this.initialState;
+  }
+
+  componentDidMount() {
+    this.props.dispatch(logout());
   }
 
   hostChange = value => {
