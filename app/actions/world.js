@@ -13,7 +13,7 @@ export function joinWorld(key) {
 export function createWorld(key) {
   return (dispatch) => {
     World.createWorld(key)
-      .then(worldId => dispatch(navigate('debug', { text: worldId })))
+      .then(worldId => dispatch(navigate('debug', { text: 'test' })))
       .catch(error => showError(error));
   };
 }

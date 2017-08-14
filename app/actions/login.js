@@ -12,8 +12,11 @@ function loginStarted() {
 function loginSuccess() {
   return { type: LOGIN_SUCCESS };
 }
-function loginError({ type: errorType, description }) {
-  return { type: LOGIN_ERROR, errorMessage: errorType };
+function loginError(error) {
+  let errorMessage;
+  if (error instanceof Error) errorMessage = error.message;
+  else errorMessage = error.type;
+  return { type: LOGIN_ERROR, errorMessage };
 }
 
 export function login(host, username) {

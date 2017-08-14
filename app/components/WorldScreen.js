@@ -39,18 +39,14 @@ class WorldScreen extends Component {
 
   joinPress = () => {
     const { key } = this.state;
+    Keyboard.dismiss();
     this.props.dispatch(joinWorld(key));
   };
 
   createPress = () => {
     const { key } = this.state;
+    Keyboard.dismiss();
     this.props.dispatch(createWorld(key));
-  };
-
-  renderError = () => {
-    const { errorMessage } = this.props;
-    if (!errorMessage) return null;
-    return <Text style={styles.error}>{`Error: ${errorMessage}`}</Text>;
   };
 
   render() {
@@ -58,8 +54,13 @@ class WorldScreen extends Component {
 
     return (
       <View style={styles.screen}>
-        {this.renderError()}
-        <TextInput value={key} placeholder="World Key" onChangeText={this.keyChange} />
+        <TextInput
+          value={key}
+          placeholder="World Key"
+          autoFocus={true}
+          onChangeText={this.keyChange}
+          onSubmitEditing={this.joinPress}
+        />
         <View style={styles.buttonWrapper}>
           <Button title="Join World" onPress={this.joinPress} />
         </View>
@@ -77,12 +78,6 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-start',
     padding: 10,
     paddingTop: 50,
-  },
-  error: {
-    textAlign: 'center',
-    color: 'darkred',
-    marginTop: 50,
-    fontSize: 10,
   },
   buttonWrapper: {
     marginTop: 20,
