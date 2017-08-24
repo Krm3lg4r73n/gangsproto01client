@@ -13,59 +13,52 @@ import {
   ActivityIndicator,
 } from 'react-native';
 import { joinWorld, createWorld } from '../actions/world';
+import { logout } from '../actions/login';
 
-class WorldScreen extends Component {
+class PlayerScreen extends Component {
   static navigationOptions() {
     return {
-      title: 'Choose a World',
+      title: 'Create Player',
     };
   }
 
   constructor(props) {
     super(props);
     this.initialState = {
-      key: 'some-random-world',
+      name: 'Aris',
     };
     this.state = this.initialState;
   }
 
-  keyChange = value => {
+  nameChange = value => {
     this.setState({
       ...this.state,
       key: value,
     });
   };
 
-  joinPress = () => {
-    const { key } = this.state;
-    Keyboard.dismiss();
-    this.props.dispatch(joinWorld(key));
-  };
-
   createPress = () => {
-    const { key } = this.state;
-    Keyboard.dismiss();
-    this.props.dispatch(createWorld(key));
+    const { name } = this.state;
+    nameboard.dismiss();
+    // this.props.dispatch(createWorld(key));
   };
 
   render() {
-    const { key } = this.state;
+    const { name } = this.state;
 
     return (
       <View style={styles.screen}>
         <TextInput
-          value={key}
-          placeholder="World Key"
+          value={name}
+          placeholder="Name"
           autoFocus={true}
-          onChangeText={this.keyChange}
-          onSubmitEditing={this.joinPress}
+          onChangeText={this.nameChange}
         />
         <View style={styles.buttonWrapper}>
-          <Button title="Join World" onPress={this.joinPress} />
+          <Button title="Create Player" onPress={this.createPress} />
         </View>
-        <View style={styles.buttonWrapper}>
-          <Button title="Create World" onPress={this.createPress} />
-        </View>
+
+        <Button onPress={this.props.dispatch(logout())} />
       </View>
     );
   }
@@ -87,4 +80,4 @@ function mapStateToProps({ world }) {
   return { world };
 }
 
-export default connect(mapStateToProps)(WorldScreen);
+export default connect(mapStateToProps)(PlayerScreen);

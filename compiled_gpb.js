@@ -16,6 +16,351 @@ export const msg = $root.msg = (() => {
      */
     const msg = {};
 
+    msg.PlayerCreate = (function() {
+
+        /**
+         * Properties of a PlayerCreate.
+         * @memberof msg
+         * @interface IPlayerCreate
+         * @property {string} [name] PlayerCreate name
+         */
+
+        /**
+         * Constructs a new PlayerCreate.
+         * @memberof msg
+         * @classdesc Represents a PlayerCreate.
+         * @constructor
+         * @param {msg.IPlayerCreate=} [properties] Properties to set
+         */
+        function PlayerCreate(properties) {
+            if (properties)
+                for (let keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                    if (properties[keys[i]] != null)
+                        this[keys[i]] = properties[keys[i]];
+        }
+
+        /**
+         * PlayerCreate name.
+         * @member {string}name
+         * @memberof msg.PlayerCreate
+         * @instance
+         */
+        PlayerCreate.prototype.name = "";
+
+        /**
+         * Creates a new PlayerCreate instance using the specified properties.
+         * @function create
+         * @memberof msg.PlayerCreate
+         * @static
+         * @param {msg.IPlayerCreate=} [properties] Properties to set
+         * @returns {msg.PlayerCreate} PlayerCreate instance
+         */
+        PlayerCreate.create = function create(properties) {
+            return new PlayerCreate(properties);
+        };
+
+        /**
+         * Encodes the specified PlayerCreate message. Does not implicitly {@link msg.PlayerCreate.verify|verify} messages.
+         * @function encode
+         * @memberof msg.PlayerCreate
+         * @static
+         * @param {msg.IPlayerCreate} message PlayerCreate message or plain object to encode
+         * @param {$protobuf.Writer} [writer] Writer to encode to
+         * @returns {$protobuf.Writer} Writer
+         */
+        PlayerCreate.encode = function encode(message, writer) {
+            if (!writer)
+                writer = $Writer.create();
+            if (message.name != null && message.hasOwnProperty("name"))
+                writer.uint32(/* id 1, wireType 2 =*/10).string(message.name);
+            return writer;
+        };
+
+        /**
+         * Encodes the specified PlayerCreate message, length delimited. Does not implicitly {@link msg.PlayerCreate.verify|verify} messages.
+         * @function encodeDelimited
+         * @memberof msg.PlayerCreate
+         * @static
+         * @param {msg.IPlayerCreate} message PlayerCreate message or plain object to encode
+         * @param {$protobuf.Writer} [writer] Writer to encode to
+         * @returns {$protobuf.Writer} Writer
+         */
+        PlayerCreate.encodeDelimited = function encodeDelimited(message, writer) {
+            return this.encode(message, writer).ldelim();
+        };
+
+        /**
+         * Decodes a PlayerCreate message from the specified reader or buffer.
+         * @function decode
+         * @memberof msg.PlayerCreate
+         * @static
+         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+         * @param {number} [length] Message length if known beforehand
+         * @returns {msg.PlayerCreate} PlayerCreate
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        PlayerCreate.decode = function decode(reader, length) {
+            if (!(reader instanceof $Reader))
+                reader = $Reader.create(reader);
+            let end = length === undefined ? reader.len : reader.pos + length, message = new $root.msg.PlayerCreate();
+            while (reader.pos < end) {
+                let tag = reader.uint32();
+                switch (tag >>> 3) {
+                case 1:
+                    message.name = reader.string();
+                    break;
+                default:
+                    reader.skipType(tag & 7);
+                    break;
+                }
+            }
+            return message;
+        };
+
+        /**
+         * Decodes a PlayerCreate message from the specified reader or buffer, length delimited.
+         * @function decodeDelimited
+         * @memberof msg.PlayerCreate
+         * @static
+         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+         * @returns {msg.PlayerCreate} PlayerCreate
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        PlayerCreate.decodeDelimited = function decodeDelimited(reader) {
+            if (!(reader instanceof $Reader))
+                reader = new $Reader(reader);
+            return this.decode(reader, reader.uint32());
+        };
+
+        /**
+         * Verifies a PlayerCreate message.
+         * @function verify
+         * @memberof msg.PlayerCreate
+         * @static
+         * @param {Object.<string,*>} message Plain object to verify
+         * @returns {string|null} `null` if valid, otherwise the reason why it is not
+         */
+        PlayerCreate.verify = function verify(message) {
+            if (typeof message !== "object" || message === null)
+                return "object expected";
+            if (message.name != null && message.hasOwnProperty("name"))
+                if (!$util.isString(message.name))
+                    return "name: string expected";
+            return null;
+        };
+
+        /**
+         * Creates a PlayerCreate message from a plain object. Also converts values to their respective internal types.
+         * @function fromObject
+         * @memberof msg.PlayerCreate
+         * @static
+         * @param {Object.<string,*>} object Plain object
+         * @returns {msg.PlayerCreate} PlayerCreate
+         */
+        PlayerCreate.fromObject = function fromObject(object) {
+            if (object instanceof $root.msg.PlayerCreate)
+                return object;
+            let message = new $root.msg.PlayerCreate();
+            if (object.name != null)
+                message.name = String(object.name);
+            return message;
+        };
+
+        /**
+         * Creates a plain object from a PlayerCreate message. Also converts values to other types if specified.
+         * @function toObject
+         * @memberof msg.PlayerCreate
+         * @static
+         * @param {msg.PlayerCreate} message PlayerCreate
+         * @param {$protobuf.IConversionOptions} [options] Conversion options
+         * @returns {Object.<string,*>} Plain object
+         */
+        PlayerCreate.toObject = function toObject(message, options) {
+            if (!options)
+                options = {};
+            let object = {};
+            if (options.defaults)
+                object.name = "";
+            if (message.name != null && message.hasOwnProperty("name"))
+                object.name = message.name;
+            return object;
+        };
+
+        /**
+         * Converts this PlayerCreate to JSON.
+         * @function toJSON
+         * @memberof msg.PlayerCreate
+         * @instance
+         * @returns {Object.<string,*>} JSON object
+         */
+        PlayerCreate.prototype.toJSON = function toJSON() {
+            return this.constructor.toObject(this, $protobuf.util.toJSONOptions);
+        };
+
+        return PlayerCreate;
+    })();
+
+    msg.ServerReset = (function() {
+
+        /**
+         * Properties of a ServerReset.
+         * @memberof msg
+         * @interface IServerReset
+         */
+
+        /**
+         * Constructs a new ServerReset.
+         * @memberof msg
+         * @classdesc Represents a ServerReset.
+         * @constructor
+         * @param {msg.IServerReset=} [properties] Properties to set
+         */
+        function ServerReset(properties) {
+            if (properties)
+                for (let keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                    if (properties[keys[i]] != null)
+                        this[keys[i]] = properties[keys[i]];
+        }
+
+        /**
+         * Creates a new ServerReset instance using the specified properties.
+         * @function create
+         * @memberof msg.ServerReset
+         * @static
+         * @param {msg.IServerReset=} [properties] Properties to set
+         * @returns {msg.ServerReset} ServerReset instance
+         */
+        ServerReset.create = function create(properties) {
+            return new ServerReset(properties);
+        };
+
+        /**
+         * Encodes the specified ServerReset message. Does not implicitly {@link msg.ServerReset.verify|verify} messages.
+         * @function encode
+         * @memberof msg.ServerReset
+         * @static
+         * @param {msg.IServerReset} message ServerReset message or plain object to encode
+         * @param {$protobuf.Writer} [writer] Writer to encode to
+         * @returns {$protobuf.Writer} Writer
+         */
+        ServerReset.encode = function encode(message, writer) {
+            if (!writer)
+                writer = $Writer.create();
+            return writer;
+        };
+
+        /**
+         * Encodes the specified ServerReset message, length delimited. Does not implicitly {@link msg.ServerReset.verify|verify} messages.
+         * @function encodeDelimited
+         * @memberof msg.ServerReset
+         * @static
+         * @param {msg.IServerReset} message ServerReset message or plain object to encode
+         * @param {$protobuf.Writer} [writer] Writer to encode to
+         * @returns {$protobuf.Writer} Writer
+         */
+        ServerReset.encodeDelimited = function encodeDelimited(message, writer) {
+            return this.encode(message, writer).ldelim();
+        };
+
+        /**
+         * Decodes a ServerReset message from the specified reader or buffer.
+         * @function decode
+         * @memberof msg.ServerReset
+         * @static
+         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+         * @param {number} [length] Message length if known beforehand
+         * @returns {msg.ServerReset} ServerReset
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        ServerReset.decode = function decode(reader, length) {
+            if (!(reader instanceof $Reader))
+                reader = $Reader.create(reader);
+            let end = length === undefined ? reader.len : reader.pos + length, message = new $root.msg.ServerReset();
+            while (reader.pos < end) {
+                let tag = reader.uint32();
+                switch (tag >>> 3) {
+                default:
+                    reader.skipType(tag & 7);
+                    break;
+                }
+            }
+            return message;
+        };
+
+        /**
+         * Decodes a ServerReset message from the specified reader or buffer, length delimited.
+         * @function decodeDelimited
+         * @memberof msg.ServerReset
+         * @static
+         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+         * @returns {msg.ServerReset} ServerReset
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        ServerReset.decodeDelimited = function decodeDelimited(reader) {
+            if (!(reader instanceof $Reader))
+                reader = new $Reader(reader);
+            return this.decode(reader, reader.uint32());
+        };
+
+        /**
+         * Verifies a ServerReset message.
+         * @function verify
+         * @memberof msg.ServerReset
+         * @static
+         * @param {Object.<string,*>} message Plain object to verify
+         * @returns {string|null} `null` if valid, otherwise the reason why it is not
+         */
+        ServerReset.verify = function verify(message) {
+            if (typeof message !== "object" || message === null)
+                return "object expected";
+            return null;
+        };
+
+        /**
+         * Creates a ServerReset message from a plain object. Also converts values to their respective internal types.
+         * @function fromObject
+         * @memberof msg.ServerReset
+         * @static
+         * @param {Object.<string,*>} object Plain object
+         * @returns {msg.ServerReset} ServerReset
+         */
+        ServerReset.fromObject = function fromObject(object) {
+            if (object instanceof $root.msg.ServerReset)
+                return object;
+            return new $root.msg.ServerReset();
+        };
+
+        /**
+         * Creates a plain object from a ServerReset message. Also converts values to other types if specified.
+         * @function toObject
+         * @memberof msg.ServerReset
+         * @static
+         * @param {msg.ServerReset} message ServerReset
+         * @param {$protobuf.IConversionOptions} [options] Conversion options
+         * @returns {Object.<string,*>} Plain object
+         */
+        ServerReset.toObject = function toObject() {
+            return {};
+        };
+
+        /**
+         * Converts this ServerReset to JSON.
+         * @function toJSON
+         * @memberof msg.ServerReset
+         * @instance
+         * @returns {Object.<string,*>} JSON object
+         */
+        ServerReset.prototype.toJSON = function toJSON() {
+            return this.constructor.toObject(this, $protobuf.util.toJSONOptions);
+        };
+
+        return ServerReset;
+    })();
+
     msg.User = (function() {
 
         /**
@@ -940,6 +1285,351 @@ export const msg = $root.msg = (() => {
         };
 
         return Ok;
+    })();
+
+    msg.PlayerCreateRequest = (function() {
+
+        /**
+         * Properties of a PlayerCreateRequest.
+         * @memberof msg
+         * @interface IPlayerCreateRequest
+         */
+
+        /**
+         * Constructs a new PlayerCreateRequest.
+         * @memberof msg
+         * @classdesc Represents a PlayerCreateRequest.
+         * @constructor
+         * @param {msg.IPlayerCreateRequest=} [properties] Properties to set
+         */
+        function PlayerCreateRequest(properties) {
+            if (properties)
+                for (let keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                    if (properties[keys[i]] != null)
+                        this[keys[i]] = properties[keys[i]];
+        }
+
+        /**
+         * Creates a new PlayerCreateRequest instance using the specified properties.
+         * @function create
+         * @memberof msg.PlayerCreateRequest
+         * @static
+         * @param {msg.IPlayerCreateRequest=} [properties] Properties to set
+         * @returns {msg.PlayerCreateRequest} PlayerCreateRequest instance
+         */
+        PlayerCreateRequest.create = function create(properties) {
+            return new PlayerCreateRequest(properties);
+        };
+
+        /**
+         * Encodes the specified PlayerCreateRequest message. Does not implicitly {@link msg.PlayerCreateRequest.verify|verify} messages.
+         * @function encode
+         * @memberof msg.PlayerCreateRequest
+         * @static
+         * @param {msg.IPlayerCreateRequest} message PlayerCreateRequest message or plain object to encode
+         * @param {$protobuf.Writer} [writer] Writer to encode to
+         * @returns {$protobuf.Writer} Writer
+         */
+        PlayerCreateRequest.encode = function encode(message, writer) {
+            if (!writer)
+                writer = $Writer.create();
+            return writer;
+        };
+
+        /**
+         * Encodes the specified PlayerCreateRequest message, length delimited. Does not implicitly {@link msg.PlayerCreateRequest.verify|verify} messages.
+         * @function encodeDelimited
+         * @memberof msg.PlayerCreateRequest
+         * @static
+         * @param {msg.IPlayerCreateRequest} message PlayerCreateRequest message or plain object to encode
+         * @param {$protobuf.Writer} [writer] Writer to encode to
+         * @returns {$protobuf.Writer} Writer
+         */
+        PlayerCreateRequest.encodeDelimited = function encodeDelimited(message, writer) {
+            return this.encode(message, writer).ldelim();
+        };
+
+        /**
+         * Decodes a PlayerCreateRequest message from the specified reader or buffer.
+         * @function decode
+         * @memberof msg.PlayerCreateRequest
+         * @static
+         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+         * @param {number} [length] Message length if known beforehand
+         * @returns {msg.PlayerCreateRequest} PlayerCreateRequest
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        PlayerCreateRequest.decode = function decode(reader, length) {
+            if (!(reader instanceof $Reader))
+                reader = $Reader.create(reader);
+            let end = length === undefined ? reader.len : reader.pos + length, message = new $root.msg.PlayerCreateRequest();
+            while (reader.pos < end) {
+                let tag = reader.uint32();
+                switch (tag >>> 3) {
+                default:
+                    reader.skipType(tag & 7);
+                    break;
+                }
+            }
+            return message;
+        };
+
+        /**
+         * Decodes a PlayerCreateRequest message from the specified reader or buffer, length delimited.
+         * @function decodeDelimited
+         * @memberof msg.PlayerCreateRequest
+         * @static
+         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+         * @returns {msg.PlayerCreateRequest} PlayerCreateRequest
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        PlayerCreateRequest.decodeDelimited = function decodeDelimited(reader) {
+            if (!(reader instanceof $Reader))
+                reader = new $Reader(reader);
+            return this.decode(reader, reader.uint32());
+        };
+
+        /**
+         * Verifies a PlayerCreateRequest message.
+         * @function verify
+         * @memberof msg.PlayerCreateRequest
+         * @static
+         * @param {Object.<string,*>} message Plain object to verify
+         * @returns {string|null} `null` if valid, otherwise the reason why it is not
+         */
+        PlayerCreateRequest.verify = function verify(message) {
+            if (typeof message !== "object" || message === null)
+                return "object expected";
+            return null;
+        };
+
+        /**
+         * Creates a PlayerCreateRequest message from a plain object. Also converts values to their respective internal types.
+         * @function fromObject
+         * @memberof msg.PlayerCreateRequest
+         * @static
+         * @param {Object.<string,*>} object Plain object
+         * @returns {msg.PlayerCreateRequest} PlayerCreateRequest
+         */
+        PlayerCreateRequest.fromObject = function fromObject(object) {
+            if (object instanceof $root.msg.PlayerCreateRequest)
+                return object;
+            return new $root.msg.PlayerCreateRequest();
+        };
+
+        /**
+         * Creates a plain object from a PlayerCreateRequest message. Also converts values to other types if specified.
+         * @function toObject
+         * @memberof msg.PlayerCreateRequest
+         * @static
+         * @param {msg.PlayerCreateRequest} message PlayerCreateRequest
+         * @param {$protobuf.IConversionOptions} [options] Conversion options
+         * @returns {Object.<string,*>} Plain object
+         */
+        PlayerCreateRequest.toObject = function toObject() {
+            return {};
+        };
+
+        /**
+         * Converts this PlayerCreateRequest to JSON.
+         * @function toJSON
+         * @memberof msg.PlayerCreateRequest
+         * @instance
+         * @returns {Object.<string,*>} JSON object
+         */
+        PlayerCreateRequest.prototype.toJSON = function toJSON() {
+            return this.constructor.toObject(this, $protobuf.util.toJSONOptions);
+        };
+
+        return PlayerCreateRequest;
+    })();
+
+    msg.PlayerUpdate = (function() {
+
+        /**
+         * Properties of a PlayerUpdate.
+         * @memberof msg
+         * @interface IPlayerUpdate
+         * @property {string} [name] PlayerUpdate name
+         */
+
+        /**
+         * Constructs a new PlayerUpdate.
+         * @memberof msg
+         * @classdesc Represents a PlayerUpdate.
+         * @constructor
+         * @param {msg.IPlayerUpdate=} [properties] Properties to set
+         */
+        function PlayerUpdate(properties) {
+            if (properties)
+                for (let keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                    if (properties[keys[i]] != null)
+                        this[keys[i]] = properties[keys[i]];
+        }
+
+        /**
+         * PlayerUpdate name.
+         * @member {string}name
+         * @memberof msg.PlayerUpdate
+         * @instance
+         */
+        PlayerUpdate.prototype.name = "";
+
+        /**
+         * Creates a new PlayerUpdate instance using the specified properties.
+         * @function create
+         * @memberof msg.PlayerUpdate
+         * @static
+         * @param {msg.IPlayerUpdate=} [properties] Properties to set
+         * @returns {msg.PlayerUpdate} PlayerUpdate instance
+         */
+        PlayerUpdate.create = function create(properties) {
+            return new PlayerUpdate(properties);
+        };
+
+        /**
+         * Encodes the specified PlayerUpdate message. Does not implicitly {@link msg.PlayerUpdate.verify|verify} messages.
+         * @function encode
+         * @memberof msg.PlayerUpdate
+         * @static
+         * @param {msg.IPlayerUpdate} message PlayerUpdate message or plain object to encode
+         * @param {$protobuf.Writer} [writer] Writer to encode to
+         * @returns {$protobuf.Writer} Writer
+         */
+        PlayerUpdate.encode = function encode(message, writer) {
+            if (!writer)
+                writer = $Writer.create();
+            if (message.name != null && message.hasOwnProperty("name"))
+                writer.uint32(/* id 1, wireType 2 =*/10).string(message.name);
+            return writer;
+        };
+
+        /**
+         * Encodes the specified PlayerUpdate message, length delimited. Does not implicitly {@link msg.PlayerUpdate.verify|verify} messages.
+         * @function encodeDelimited
+         * @memberof msg.PlayerUpdate
+         * @static
+         * @param {msg.IPlayerUpdate} message PlayerUpdate message or plain object to encode
+         * @param {$protobuf.Writer} [writer] Writer to encode to
+         * @returns {$protobuf.Writer} Writer
+         */
+        PlayerUpdate.encodeDelimited = function encodeDelimited(message, writer) {
+            return this.encode(message, writer).ldelim();
+        };
+
+        /**
+         * Decodes a PlayerUpdate message from the specified reader or buffer.
+         * @function decode
+         * @memberof msg.PlayerUpdate
+         * @static
+         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+         * @param {number} [length] Message length if known beforehand
+         * @returns {msg.PlayerUpdate} PlayerUpdate
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        PlayerUpdate.decode = function decode(reader, length) {
+            if (!(reader instanceof $Reader))
+                reader = $Reader.create(reader);
+            let end = length === undefined ? reader.len : reader.pos + length, message = new $root.msg.PlayerUpdate();
+            while (reader.pos < end) {
+                let tag = reader.uint32();
+                switch (tag >>> 3) {
+                case 1:
+                    message.name = reader.string();
+                    break;
+                default:
+                    reader.skipType(tag & 7);
+                    break;
+                }
+            }
+            return message;
+        };
+
+        /**
+         * Decodes a PlayerUpdate message from the specified reader or buffer, length delimited.
+         * @function decodeDelimited
+         * @memberof msg.PlayerUpdate
+         * @static
+         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+         * @returns {msg.PlayerUpdate} PlayerUpdate
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        PlayerUpdate.decodeDelimited = function decodeDelimited(reader) {
+            if (!(reader instanceof $Reader))
+                reader = new $Reader(reader);
+            return this.decode(reader, reader.uint32());
+        };
+
+        /**
+         * Verifies a PlayerUpdate message.
+         * @function verify
+         * @memberof msg.PlayerUpdate
+         * @static
+         * @param {Object.<string,*>} message Plain object to verify
+         * @returns {string|null} `null` if valid, otherwise the reason why it is not
+         */
+        PlayerUpdate.verify = function verify(message) {
+            if (typeof message !== "object" || message === null)
+                return "object expected";
+            if (message.name != null && message.hasOwnProperty("name"))
+                if (!$util.isString(message.name))
+                    return "name: string expected";
+            return null;
+        };
+
+        /**
+         * Creates a PlayerUpdate message from a plain object. Also converts values to their respective internal types.
+         * @function fromObject
+         * @memberof msg.PlayerUpdate
+         * @static
+         * @param {Object.<string,*>} object Plain object
+         * @returns {msg.PlayerUpdate} PlayerUpdate
+         */
+        PlayerUpdate.fromObject = function fromObject(object) {
+            if (object instanceof $root.msg.PlayerUpdate)
+                return object;
+            let message = new $root.msg.PlayerUpdate();
+            if (object.name != null)
+                message.name = String(object.name);
+            return message;
+        };
+
+        /**
+         * Creates a plain object from a PlayerUpdate message. Also converts values to other types if specified.
+         * @function toObject
+         * @memberof msg.PlayerUpdate
+         * @static
+         * @param {msg.PlayerUpdate} message PlayerUpdate
+         * @param {$protobuf.IConversionOptions} [options] Conversion options
+         * @returns {Object.<string,*>} Plain object
+         */
+        PlayerUpdate.toObject = function toObject(message, options) {
+            if (!options)
+                options = {};
+            let object = {};
+            if (options.defaults)
+                object.name = "";
+            if (message.name != null && message.hasOwnProperty("name"))
+                object.name = message.name;
+            return object;
+        };
+
+        /**
+         * Converts this PlayerUpdate to JSON.
+         * @function toJSON
+         * @memberof msg.PlayerUpdate
+         * @instance
+         * @returns {Object.<string,*>} JSON object
+         */
+        PlayerUpdate.prototype.toJSON = function toJSON() {
+            return this.constructor.toObject(this, $protobuf.util.toJSONOptions);
+        };
+
+        return PlayerUpdate;
     })();
 
     msg.WorldJoined = (function() {

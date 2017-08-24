@@ -1,14 +1,20 @@
 import React, { Component } from 'react';
-import { Text } from 'react-native';
+import { connect } from 'react-redux';
+import { View, Text, Button } from 'react-native';
+import { logout } from '../actions/login';
 
 class DebugScreen extends Component {
   render() {
+    console.log(this.props.dispatch);
     return (
-      <Text>
-        {String(this.props.navigation.state.params.text)}
-      </Text>
+      <View style={{ flex: 1 }}>
+        <Text>
+          {String(this.props.navigation.state.params.text)}
+        </Text>
+        <Button title="Logout" onPress={() => this.props.dispatch(logout())} />
+      </View>
     );
   }
 }
 
-export default DebugScreen;
+export default connect()(DebugScreen);

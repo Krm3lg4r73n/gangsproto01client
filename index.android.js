@@ -1,13 +1,13 @@
 import React, { Component } from 'react';
 import { Provider } from 'react-redux';
 import { AppRegistry } from 'react-native';
-import setupStore from './app/services/setupStore';
+import Store from './lib/Store';
 import App from './app/components/App';
 
 export default class reactNativeTest extends Component {
   render() {
     return (
-      <Provider store={setupStore()}>
+      <Provider store={Store}>
         <App />
       </Provider>
     );

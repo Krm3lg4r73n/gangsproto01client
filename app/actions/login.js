@@ -15,7 +15,7 @@ function loginSuccess() {
 function loginError(error) {
   let errorMessage;
   if (error instanceof Error) errorMessage = error.message;
-  else errorMessage = error.type;
+  else errorMessage = error.description;
   return { type: LOGIN_ERROR, errorMessage };
 }
 
@@ -30,5 +30,8 @@ export function login(host, username) {
 }
 
 export function logout() {
-  return dispatch => Network.disconnect();
+  return (dispatch) => {
+    Network.disconnect();
+    dispatch(navigate('login'));
+  };
 }

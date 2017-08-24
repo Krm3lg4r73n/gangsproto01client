@@ -31,10 +31,6 @@ class LoginScreen extends Component {
     this.state = this.initialState;
   }
 
-  componentDidMount() {
-    this.props.dispatch(logout());
-  }
-
   hostChange = value => {
     this.setState({
       ...this.state,
