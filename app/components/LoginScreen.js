@@ -12,7 +12,7 @@ import {
   View,
   ActivityIndicator,
 } from 'react-native';
-import { login, logout } from '../actions/login';
+import { login, logout } from '../dux/login';
 
 class LoginScreen extends Component {
   static navigationOptions() {

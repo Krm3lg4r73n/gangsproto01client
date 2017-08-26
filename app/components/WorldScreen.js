@@ -12,7 +12,7 @@ import {
   View,
   ActivityIndicator,
 } from 'react-native';
-import { joinWorld, createWorld } from '../actions/world';
+import { joinWorld, createWorld } from '../dux/world';
 
 class WorldScreen extends Component {
   static navigationOptions() {

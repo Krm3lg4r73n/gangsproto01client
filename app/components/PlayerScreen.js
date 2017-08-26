@@ -12,8 +12,8 @@ import {
   View,
   ActivityIndicator,
 } from 'react-native';
-import { joinWorld, createWorld } from '../actions/world';
-import { logout } from '../actions/login';
+import { joinWorld, createWorld } from '../dux/world';
+import { logout } from '../dux/login';
 
 class PlayerScreen extends Component {
   static navigationOptions() {

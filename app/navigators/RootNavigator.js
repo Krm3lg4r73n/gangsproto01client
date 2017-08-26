@@ -8,7 +8,7 @@ const RootNavigator = StackNavigator({
   login: { screen: LoginScreen },
   world: { screen: WorldScreen },
   player: { screen: PlayerScreen },
-  debug: { screen: DebugScreen, path: 'debug/:name' },
+  debug: { screen: DebugScreen },
 });
 
 export default RootNavigator;
