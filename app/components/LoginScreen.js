@@ -13,6 +13,8 @@ import {
   ActivityIndicator,
 } from 'react-native';
 import { login, logout } from '../dux/login';
+import { networkConnect } from '../dux/network';
+import { msgToString } from '../services/messaging';
 
 class LoginScreen extends Component {
   static navigationOptions() {
@@ -47,12 +49,12 @@ class LoginScreen extends Component {
 
   connectPress = () => {
     const { host, username } = this.state;
-    this.props.dispatch(login(host, username));
+    this.props.dispatch(networkConnect(host));
     Keyboard.dismiss();
   };
 
   renderSubmit = () => {
-    if (this.props.connecting) {
+    if (this.props.network.connecting) {
       return <ActivityIndicator style={styles.spinner} size="large" />;
     } else {
       return (
@@ -64,19 +66,22 @@ class LoginScreen extends Component {
   };
 
   renderError = () => {
-    const { errorMessage } = this.props;
+    const { errorMessage } = this.props.network;
     if (!errorMessage) return null;
     return <Text style={styles.error}>{`Error: ${errorMessage}`}</Text>;
   };
 
   render() {
     const { host, username } = this.state;
-    const { connecting } = this.props;
+    const { connecting } = this.props.network;
 
     return (
       <View style={styles.screen}>
         <View style={styles.top}>
           <Text style={styles.title}>GangsClient v0.1</Text>
+          <Text>
+            {msgToString(this.props.message.lastReceived)}
+          </Text>
           {this.renderError()}
         </View>
         <View style={styles.bottom}>
@@ -134,8 +139,8 @@ const styles = StyleSheet.create({
   },
 });
 
-function mapStateToProps({ login }) {
-  return login;
+function mapStateToProps({ network, message }) {
+  return { network, message };
 }
 
 export default connect(mapStateToProps)(LoginScreen);

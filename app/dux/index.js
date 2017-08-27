@@ -1,13 +1,28 @@
-import { combineEpics } from 'redux-observable';
 import { combineReducers } from 'redux';
-import network, { connectEpic } from './network';
-import login from './login';
+import { combineEpics } from 'redux-observable';
+import network, {
+  networkConnectEpic,
+  networkDisconnectEpic,
+  networkSendDataEpic,
+  networkReceiveDataEpic,
+  testEpic,
+} from './network';
+import message, { messageSendEpic } from './message';
 import navigation from './navigation';
-
-export const rootEpic = combineEpics(connectEpic);
+import login from './login';
 
 export const rootReducer = combineReducers({
-  navigation,
   network,
+  message,
+  navigation,
   login,
 });
+
+export const rootEpic = combineEpics(
+  networkConnectEpic,
+  networkDisconnectEpic,
+  networkSendDataEpic,
+  networkReceiveDataEpic,
+  testEpic,
+  messageSendEpic,
+);
