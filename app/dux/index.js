@@ -5,11 +5,10 @@ import network, {
   networkDisconnectEpic,
   networkSendDataEpic,
   networkReceiveDataEpic,
-  testEpic,
 } from './network';
 import message, { messageSendEpic } from './message';
+import login, { loginEpic, testEpic } from './login';
 import navigation from './navigation';
-import login from './login';
 
 export const rootReducer = combineReducers({
   network,
@@ -23,6 +22,7 @@ export const rootEpic = combineEpics(
   networkDisconnectEpic,
   networkSendDataEpic,
   networkReceiveDataEpic,
-  testEpic,
   messageSendEpic,
+  loginEpic,
+  testEpic,
 );

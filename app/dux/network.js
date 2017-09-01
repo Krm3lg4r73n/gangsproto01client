@@ -3,13 +3,13 @@ import { connect, disconnect, send } from '../services/network';
 import { decode, Msg } from '../services/messaging';
 import { messageReceive, messageSend } from './message';
 
-const CONNECT = 'gangsclient/network/CONNECT';
-const CONNECTED = 'gangsclient/network/CONNECTED';
-const DISCONNECT = 'gangsclient/network/DISCONNECTED';
-const DISCONNECTED = 'gangsclient/network/DISCONNECTED';
-const ERROR = 'gangsclient/network/ERROR';
-const SEND_DATA = 'gangsclient/network/SEND_DATA';
-const RECEIVE_DATA = 'gangsclient/network/RECEIVE_DATA';
+export const CONNECT = 'gangsclient/network/CONNECT';
+export const CONNECTED = 'gangsclient/network/CONNECTED';
+export const DISCONNECT = 'gangsclient/network/DISCONNECTED';
+export const DISCONNECTED = 'gangsclient/network/DISCONNECTED';
+export const ERROR = 'gangsclient/network/ERROR';
+export const SEND_DATA = 'gangsclient/network/SEND_DATA';
+export const RECEIVE_DATA = 'gangsclient/network/RECEIVE_DATA';
 
 const initialState = {
   host: null,
@@ -74,12 +74,3 @@ export const networkSendDataEpic = action$ =>
 
 export const networkReceiveDataEpic = action$ =>
   action$.ofType(RECEIVE_DATA).map(action => messageReceive(decode(action.payload)));
-
-export const testEpic = action$ =>
-  action$.ofType(CONNECTED).mapTo(
-    messageSend(
-      Msg.User.create({
-        name: 'David',
-      }),
-    ),
-  );

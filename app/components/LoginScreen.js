@@ -12,8 +12,7 @@ import {
   View,
   ActivityIndicator,
 } from 'react-native';
-import { login, logout } from '../dux/login';
-import { networkConnect } from '../dux/network';
+import { login } from '../dux/login';
 import { msgToString } from '../services/messaging';
 
 class LoginScreen extends Component {
@@ -49,12 +48,12 @@ class LoginScreen extends Component {
 
   connectPress = () => {
     const { host, username } = this.state;
-    this.props.dispatch(networkConnect(host));
+    this.props.dispatch(login(host, username));
     Keyboard.dismiss();
   };
 
   renderSubmit = () => {
-    if (this.props.network.connecting) {
+    if (this.props.login.inProgress) {
       return <ActivityIndicator style={styles.spinner} size="large" />;
     } else {
       return (
@@ -66,22 +65,19 @@ class LoginScreen extends Component {
   };
 
   renderError = () => {
-    const { errorMessage } = this.props.network;
+    const { errorMessage } = this.props.login;
     if (!errorMessage) return null;
     return <Text style={styles.error}>{`Error: ${errorMessage}`}</Text>;
   };
 
   render() {
     const { host, username } = this.state;
-    const { connecting } = this.props.network;
+    const { inProgress } = this.props.login;
 
     return (
       <View style={styles.screen}>
         <View style={styles.top}>
           <Text style={styles.title}>GangsClient v0.1</Text>
-          <Text>
-            {msgToString(this.props.message.lastReceived)}
-          </Text>
           {this.renderError()}
         </View>
         <View style={styles.bottom}>
@@ -89,7 +85,7 @@ class LoginScreen extends Component {
             value={host}
             placeholder="Host"
             onChangeText={this.hostChange}
-            editable={!connecting}
+            editable={!inProgress}
           />
           <TextInput
             autoFocus={true}
@@ -97,7 +93,7 @@ class LoginScreen extends Component {
             placeholder="Username"
             onChangeText={this.usernameChange}
             onSubmitEditing={this.connectPress}
-            editable={!connecting}
+            editable={!inProgress}
           />
           {this.renderSubmit()}
         </View>
@@ -139,8 +135,8 @@ const styles = StyleSheet.create({
   },
 });
 
-function mapStateToProps({ network, message }) {
-  return { network, message };
+function mapStateToProps({ login }) {
+  return { login };
 }
 
 export default connect(mapStateToProps)(LoginScreen);
