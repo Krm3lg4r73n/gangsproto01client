@@ -1,12 +1,13 @@
 import { Observable } from 'rxjs';
 import { navigate } from './navigation';
 import { networkConnect, networkDisconnect, CONNECTED } from './network';
-import { messageSend, RECEIVE } from './message';
+import { MSG_RECEIVE, messageSend } from './message';
 import { Msg } from '../services/messaging';
+import { sendMsgObs } from '../services/observables';
 
-const LOGIN = 'gangsclient/login/LOGIN';
-const SUCCESS = 'gangsclient/login/SUCCESS';
-const ERROR = 'gangsclient/login/ERROR';
+export const LOGIN_EXECUTE = 'gangsclient/login/EXECUTE';
+export const LOGIN_SUCCESS = 'gangsclient/login/SUCCESS';
+export const LOGIN_ERROR = 'gangsclient/login/ERROR';
 
 const initialState = {
   inProgress: false,
@@ -15,19 +16,19 @@ const initialState = {
 
 export default function reducer(state = initialState, action) {
   switch (action.type) {
-    case LOGIN:
+    case LOGIN_EXECUTE:
       return {
         ...state,
         inProgress: true,
         errorMessage: null,
       };
-    case SUCCESS:
+    case LOGIN_SUCCESS:
       return {
         ...state,
         inProgress: false,
         errorMessage: null,
       };
-    case ERROR:
+    case LOGIN_ERROR:
       return {
         ...state,
         inProgress: false,
@@ -39,34 +40,36 @@ export default function reducer(state = initialState, action) {
 }
 
 export function login(host, username) {
-  return { type: LOGIN, payload: { host, username } };
+  return { type: LOGIN_EXECUTE, payload: { host, username } };
 }
 
 export function loginSuccess() {
-  return { type: SUCCESS };
+  return { type: LOGIN_SUCCESS };
 }
 
 export function loginError(error) {
   let errorMessage;
   if (error instanceof Error) errorMessage = error.message;
   else errorMessage = error.description;
-  return { type: ERROR, payload: errorMessage };
+  return { type: LOGIN_ERROR, payload: errorMessage };
 }
 
 export const loginEpic = (action$, store) => {
   const { login } = store.getState();
 
-  return action$.ofType(LOGIN).filter(() => !login.inProgress).switchMap((action) => {
+  return action$.ofType(LOGIN_EXECUTE).filter(() => !login.inProgress).switchMap((action) => {
     const { host, username } = action.payload;
-    const userMsg = Msg.User.create({ name: username });
 
     const connectDispatch$ = Observable.of(networkDisconnect(), networkConnect(host));
-    const loginDispatch$ = Observable.of(messageSend(userMsg));
-    const successDispatch$ = Observable.of(navigate('world')).concat(
-      Observable.of(loginSuccess()).delay(500),
+    const loginDispatch$ = Observable.of(
+      messageSend(Msg.ServerReset.create()),
+      messageSend(Msg.User.create({ name: username })),
+    );
+    const successDispatch$ = Observable.of(navigate('enterWorld')).concat(
+      Observable.of(loginSuccess()).delay(100),
     );
 
-    const loginResult$ = action$.ofType(RECEIVE).take(1).mergeMap(({ payload }) => {
+    const loginResult$ = action$.ofType(MSG_RECEIVE).take(1).mergeMap(({ payload }) => {
       switch (payload.msg.constructor) {
         case Msg.Ok:
           return successDispatch$;
@@ -82,4 +85,4 @@ export const loginEpic = (action$, store) => {
 };
 
 export const testEpic = (action$, store) =>
-  action$.ofType(RECEIVE).do(action => console.log(action)).switchMapTo(Observable.empty());
+  action$.ofType(MSG_RECEIVE).do(action => console.log(action)).switchMapTo(Observable.empty());

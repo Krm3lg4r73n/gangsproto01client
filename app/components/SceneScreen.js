@@ -13,10 +13,10 @@ import {
 } from 'react-native';
 import { playerCreate } from '../dux/player';
 
-class PlayerScreen extends Component {
+class SceneScreen extends Component {
   static navigationOptions() {
     return {
-      title: 'Player',
+      title: 'Scene',
     };
   }
 
@@ -31,7 +31,7 @@ class PlayerScreen extends Component {
 
     return (
       <View style={styles.screen}>
-        <Text>PlayerScreen</Text>
+        <Text>SceneScreen</Text>
       </View>
     );
   }
@@ -50,4 +50,4 @@ function mapStateToProps() {
   return {};
 }
 
-export default connect(mapStateToProps)(PlayerScreen);
+export default connect(mapStateToProps)(SceneScreen);

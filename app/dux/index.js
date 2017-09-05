@@ -9,12 +9,15 @@ import network, {
 import message, { messageSendEpic } from './message';
 import login, { loginEpic, testEpic } from './login';
 import navigation from './navigation';
+import { joinWorldEpic, createWorldEpic } from './world';
+import player, { createPlayerEpic } from './player';
 
 export const rootReducer = combineReducers({
   network,
   message,
   navigation,
   login,
+  player,
 });
 
 export const rootEpic = combineEpics(
@@ -25,4 +28,7 @@ export const rootEpic = combineEpics(
   messageSendEpic,
   loginEpic,
   testEpic,
+  joinWorldEpic,
+  createWorldEpic,
+  createPlayerEpic,
 );

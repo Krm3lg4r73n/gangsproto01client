@@ -12,9 +12,9 @@ import {
   View,
   ActivityIndicator,
 } from 'react-native';
-import { joinWorld, createWorld } from '../dux/world';
+import { worldJoin, worldCreate } from '../dux/world';
 
-class WorldScreen extends Component {
+class EnterWorldScreen extends Component {
   static navigationOptions() {
     return {
       title: 'Choose a World',
@@ -39,13 +39,13 @@ class WorldScreen extends Component {
   joinPress = () => {
     const { key } = this.state;
     Keyboard.dismiss();
-    this.props.dispatch(joinWorld(key));
+    this.props.dispatch(worldJoin(key));
   };
 
   createPress = () => {
     const { key } = this.state;
     Keyboard.dismiss();
-    this.props.dispatch(createWorld(key));
+    this.props.dispatch(worldCreate(key));
   };
 
   render() {
@@ -87,4 +87,4 @@ function mapStateToProps({ world }) {
   return { world };
 }
 
-export default connect(mapStateToProps)(WorldScreen);
+export default connect(mapStateToProps)(EnterWorldScreen);

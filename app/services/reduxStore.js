@@ -8,7 +8,6 @@ import network from './network';
 const epicMiddleware = createEpicMiddleware(rootEpic, { dependencies: network });
 
 const composeEnhancers = composeWithDevTools({ realtime: true, port: 8081 });
-export default createStore(
-  rootReducer,
-  window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__(applyMiddleware(epicMiddleware, thunk)),
-);
+let enhancer = applyMiddleware(epicMiddleware, thunk);
+if (window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__) { enhancer = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__(enhancer); }
+export default createStore(rootReducer, enhancer);

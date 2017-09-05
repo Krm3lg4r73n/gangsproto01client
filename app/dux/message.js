@@ -1,8 +1,8 @@
 import { encode } from '../services/messaging';
 import { networkSendData } from './network';
 
-export const SEND = 'gangsclient/message/SEND';
-export const RECEIVE = 'gangsclient/message/RECEIVE';
+export const MSG_SEND = 'gangsclient/message/SEND';
+export const MSG_RECEIVE = 'gangsclient/message/RECEIVE';
 
 const initialState = {
   lastSend: null,
@@ -11,9 +11,9 @@ const initialState = {
 
 export default function reducer(state = initialState, action) {
   switch (action.type) {
-    case SEND:
+    case MSG_SEND:
       return { ...state, lastSend: action.payload.msg };
-    case RECEIVE:
+    case MSG_RECEIVE:
       return { ...state, lastReceived: action.payload.msg };
     default:
       return state;
@@ -21,12 +21,12 @@ export default function reducer(state = initialState, action) {
 }
 
 export function messageSend(message) {
-  return { type: SEND, payload: { msgType: message.constructor.name, msg: message } };
+  return { type: MSG_SEND, payload: { msgType: message.constructor.name, msg: message } };
 }
 
 export function messageReceive(message) {
-  return { type: RECEIVE, payload: { msgType: message.constructor.name, msg: message } };
+  return { type: MSG_RECEIVE, payload: { msgType: message.constructor.name, msg: message } };
 }
 
 export const messageSendEpic = action$ =>
-  action$.ofType(SEND).map(action => networkSendData(encode(action.payload.msg)));
+  action$.ofType(MSG_SEND).map(action => networkSendData(encode(action.payload.msg)));
