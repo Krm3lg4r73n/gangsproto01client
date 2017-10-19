@@ -1,0 +1,3 @@
+REACT_NATIVE_PACKAGER_HOSTNAME=192.168.2.107 yarn start
+
+sudo ifconfig lo0 alias 192.168.100.1
