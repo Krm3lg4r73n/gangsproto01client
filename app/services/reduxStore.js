@@ -9,5 +9,17 @@ const epicMiddleware = createEpicMiddleware(rootEpic, { dependencies: network })
 
 const composeEnhancers = composeWithDevTools({ realtime: true, port: 8081 });
 let enhancer = applyMiddleware(epicMiddleware, thunk);
-if (window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__) { enhancer = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__(enhancer); }
-export default createStore(rootReducer, enhancer);
+if (window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__) {
+  enhancer = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__(enhancer);
+}
+
+const store = createStore(rootReducer, enhancer);
+
+if (module.hot) {
+  module.hot.accept(() => {
+    const nextRootReducer = require('../dux').rootReducer;
+    store.replaceReducer(nextRootReducer);
+  });
+}
+
+export default store;

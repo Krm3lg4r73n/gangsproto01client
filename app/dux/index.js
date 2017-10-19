@@ -11,6 +11,9 @@ import login, { loginEpic, testEpic } from './login';
 import navigation from './navigation';
 import { joinWorldEpic, createWorldEpic } from './world';
 import player, { createPlayerEpic } from './player';
+import location, { updateLocationEpic } from './location';
+import devServer, { devServerEpic } from './devServer';
+import scene from './scene';
 
 export const rootReducer = combineReducers({
   network,
@@ -18,6 +21,9 @@ export const rootReducer = combineReducers({
   navigation,
   login,
   player,
+  location,
+  devServer,
+  scene,
 });
 
 export const rootEpic = combineEpics(
@@ -31,4 +37,6 @@ export const rootEpic = combineEpics(
   joinWorldEpic,
   createWorldEpic,
   createPlayerEpic,
+  updateLocationEpic,
+  devServerEpic,
 );

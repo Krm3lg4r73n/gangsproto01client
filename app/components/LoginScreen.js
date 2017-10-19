@@ -6,6 +6,7 @@ import { connect } from 'react-redux';
 import {
   StyleSheet,
   TextInput,
+  Switch,
   Text,
   Button,
   Keyboard,
@@ -13,6 +14,7 @@ import {
   ActivityIndicator,
 } from 'react-native';
 import { login } from '../dux/login';
+import { devServerLogin } from '../dux/devServer';
 import { msgToString } from '../services/messaging';
 
 class LoginScreen extends Component {
@@ -28,6 +30,7 @@ class LoginScreen extends Component {
     this.initialState = {
       host: '192.168.100.1:8080',
       username: 'David',
+      devServer: true,
     };
     this.state = this.initialState;
   }
@@ -46,10 +49,32 @@ class LoginScreen extends Component {
     });
   };
 
+  devServerChange = () => {
+    this.setState({
+      ...this.state,
+      devServer: !this.state.devServer,
+    });
+  };
+
   connectPress = () => {
-    const { host, username } = this.state;
-    this.props.dispatch(login(host, username));
+    const { host, username, devServer } = this.state;
+    if (devServer) this.props.dispatch(devServerLogin(username));
+    else this.props.dispatch(login(host, username));
     Keyboard.dismiss();
+  };
+
+  renderHost = () => {
+    const { host, devServer } = this.state;
+    const { inProgress } = this.props.login;
+    if (devServer) return null;
+    return (
+      <TextInput
+        value={host}
+        placeholder="Host"
+        onChangeText={this.hostChange}
+        editable={!inProgress}
+      />
+    );
   };
 
   renderSubmit = () => {
@@ -71,7 +96,7 @@ class LoginScreen extends Component {
   };
 
   render() {
-    const { host, username } = this.state;
+    const { host, username, devServer } = this.state;
     const { inProgress } = this.props.login;
 
     return (
@@ -81,12 +106,11 @@ class LoginScreen extends Component {
           {this.renderError()}
         </View>
         <View style={styles.bottom}>
-          <TextInput
-            value={host}
-            placeholder="Host"
-            onChangeText={this.hostChange}
-            editable={!inProgress}
-          />
+          <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+            <Switch value={devServer} onValueChange={this.devServerChange} disabled={inProgress} />
+            <Text style={{ marginLeft: 5 }}>Offline dev mode</Text>
+          </View>
+          {this.renderHost()}
           <TextInput
             autoFocus={true}
             value={username}

@@ -23,11 +23,7 @@ export default function reducer(state = initialState, action) {
         errorMessage: null,
       };
     case LOGIN_SUCCESS:
-      return {
-        ...state,
-        inProgress: false,
-        errorMessage: null,
-      };
+      return initialState;
     case LOGIN_ERROR:
       return {
         ...state,
@@ -54,12 +50,9 @@ export function loginError(error) {
   return { type: LOGIN_ERROR, payload: errorMessage };
 }
 
-export const loginEpic = (action$, store) => {
-  const { login } = store.getState();
-
-  return action$.ofType(LOGIN_EXECUTE).filter(() => !login.inProgress).switchMap((action) => {
+export const loginEpic = (action$, store) =>
+  action$.ofType(LOGIN_EXECUTE).switchMap((action) => {
     const { host, username } = action.payload;
-
     const connectDispatch$ = Observable.of(networkDisconnect(), networkConnect(host));
     const loginDispatch$ = Observable.of(
       messageSend(Msg.ServerReset.create()),
@@ -82,7 +75,6 @@ export const loginEpic = (action$, store) => {
       action$.ofType(CONNECTED).switchMapTo(loginDispatch$.merge(loginResult$)),
     );
   });
-};
 
 export const testEpic = (action$, store) =>
   action$.ofType(MSG_RECEIVE).do(action => console.log(action)).switchMapTo(Observable.empty());

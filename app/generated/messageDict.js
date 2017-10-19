@@ -15,6 +15,8 @@ export function parseMessage(type, data) {
     
       case 105: return msg.PlayerCreateRequest.decode(data);
     
+      case 106: return msg.LocationUpdate.decode(data);
+    
       case 201: return msg.ServerReset.decode(data);
     
       case 202: return msg.User.decode(data);
@@ -43,6 +45,8 @@ export function messageType(messageConstructor) {
       case msg.PlayerUpdate: return 104;
     
       case msg.PlayerCreateRequest: return 105;
+    
+      case msg.LocationUpdate: return 106;
     
       case msg.ServerReset: return 201;
     

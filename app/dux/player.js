@@ -36,7 +36,7 @@ export function playerUpdate(player) {
 export function createPlayerEpic(action$) {
   return action$.ofType(PLAYER_CREATE).switchMap((action) => {
     const responseMapping = [
-      [Msg.PlayerUpdate, msg => Observable.of(playerUpdate(msg))],
+      [Msg.PlayerUpdate, msg => Observable.of(navigate('world'), playerUpdate(msg))],
       [Msg.Error, msg => errorObs(msg)],
     ];
     return sendMsgObs(Msg.PlayerCreate.create(action.payload)).merge(

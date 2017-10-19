@@ -28,10 +28,14 @@ class TravelScreen extends Component {
 
   render() {
     const { name } = this.state;
-
+    const { location } = this.props;
+    const locName = location.loaded ? location.current_location.name : '--';
     return (
       <View style={styles.screen}>
-        <Text>TravelScreen</Text>
+        <Text style={styles.bold}>Current Location</Text>
+        <Text>
+          {locName}
+        </Text>
       </View>
     );
   }
@@ -42,12 +46,14 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'flex-start',
     padding: 10,
-    paddingTop: 50,
+  },
+  bold: {
+    fontWeight: 'bold',
   },
 });
 
-function mapStateToProps() {
-  return {};
+function mapStateToProps({ location }) {
+  return { location };
 }
 
 export default connect(mapStateToProps)(TravelScreen);

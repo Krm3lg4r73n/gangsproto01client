@@ -31,7 +31,10 @@ class PlayerScreen extends Component {
 
     return (
       <View style={styles.screen}>
-        <Text>PlayerScreen</Text>
+        <Text style={styles.bold}>Name</Text>
+        <Text>
+          {this.props.player.name}
+        </Text>
       </View>
     );
   }
@@ -42,12 +45,14 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'flex-start',
     padding: 10,
-    paddingTop: 50,
+  },
+  bold: {
+    fontWeight: 'bold',
   },
 });
 
-function mapStateToProps() {
-  return {};
+function mapStateToProps({ player }) {
+  return { player };
 }
 
 export default connect(mapStateToProps)(PlayerScreen);

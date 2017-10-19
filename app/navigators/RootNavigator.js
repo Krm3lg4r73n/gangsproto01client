@@ -12,6 +12,7 @@ const WorldNavigator = TabNavigator(
     scene: { screen: SceneScreen },
     player: { screen: PlayerScreen },
     travel: { screen: TravelScreen },
+    debug: { screen: DebugScreen },
   },
   {
     swipeEnabled: true,
@@ -28,7 +29,6 @@ const RootNavigator = StackNavigator({
       header: null,
     }),
   },
-  debug: { screen: DebugScreen },
 });
 
 export default RootNavigator;
